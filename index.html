@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Pranav Vasisth</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#fafaf8;
+  --surface:#ffffff;
+  --text:#1a1a18;
+  --muted:#6b6b60;
+  --faint:#a8a89a;
+  --border:#e2e2d8;
+  --accent:#2a4a7f;
+  --accent-light:#eef2f9;
+  --mono:'JetBrains Mono',monospace;
+  --serif:'EB Garamond',Georgia,serif;
+}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--serif);
+  font-size:17px;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.page{max-width:900px;margin:0 auto;padding:0 28px 80px}
+
+.topbar{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:32px 0 24px;
+  border-bottom:1px solid var(--border);
+  margin-bottom:56px;
+}
+.topbar-name{font-size:18px;font-weight:600;letter-spacing:0.01em}
+.topbar-links{display:flex;gap:24px;font-size:14px;font-family:var(--mono);color:var(--muted)}
+.topbar-links a{color:var(--muted)}
+.topbar-links a:hover{color:var(--accent);text-decoration:none}
+
+.hero{display:grid;grid-template-columns:1fr auto;gap:32px;align-items:start;margin-bottom:64px}
+.hero-number{font-family:var(--mono);font-size:12px;color:var(--faint);margin-bottom:10px;letter-spacing:0.06em}
+.hero h1{font-size:clamp(32px,5vw,48px);font-weight:400;line-height:1.15;margin-bottom:16px;letter-spacing:-0.01em}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.hero-desc{font-size:16px;color:var(--muted);max-width:480px;line-height:1.75}
+.hero-right{
+  background:var(--accent-light);
+  border:1px solid #c8d6ec;
+  border-radius:4px;
+  padding:18px 20px;
+  min-width:200px;
+  font-family:var(--mono);
+  font-size:12px;
+}
+.hero-right .stat{margin-bottom:12px}
+.hero-right .stat:last-child{margin-bottom:0}
+.stat-label{color:var(--faint);margin-bottom:2px;letter-spacing:0.04em}
+.stat-value{color:var(--accent);font-size:13px;font-weight:500}
+
+.section{margin-bottom:60px}
+.section-head{
+  display:flex;align-items:baseline;gap:16px;
+  margin-bottom:28px;
+  padding-bottom:10px;
+  border-bottom:1px solid var(--border);
+}
+.section-num{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:0.06em;min-width:24px}
+.section-title{font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)}
+
+.about-body{font-size:17px;color:var(--muted);line-height:1.8;max-width:620px}
+.about-body p+p{margin-top:1em}
+
+.carousel-controls{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:14px;
+}
+.carousel-counter{font-family:var(--mono);font-size:12px;color:var(--faint)}
+.carousel-btns{display:flex;gap:8px}
+.cbtn{
+  width:32px;height:32px;
+  border:1px solid var(--border);
+  border-radius:4px;
+  background:var(--surface);
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;
+  color:var(--muted);
+  font-family:var(--mono);
+  transition:border-color 0.15s, color 0.15s;
+}
+.cbtn:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+.cbtn:disabled{opacity:0.3;cursor:default}
+
+.carousel-viewport{overflow:hidden;border-radius:6px}
+.carousel-track{
+  display:flex;
+  gap:14px;
+  transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  align-items:stretch;
+}
+.proj-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:20px;
+  flex:0 0 calc(33.333% - 10px);
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  min-width:0;
+}
+.proj-card-num{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:0.04em}
+.proj-card-title{font-size:16px;font-weight:500;line-height:1.3}
+.proj-card-desc{font-size:13px;color:var(--muted);line-height:1.65;flex:1}
+.proj-card-result{
+  font-family:var(--mono);
+  font-size:11px;
+  background:var(--accent-light);
+  border:1px solid #c8d6ec;
+  border-radius:4px;
+  padding:8px 10px;
+  color:#1a3460;
+  line-height:1.9;
+}
+.proj-card-tools{display:flex;flex-wrap:wrap;gap:5px}
+.tool{font-family:var(--mono);font-size:10px;padding:2px 7px;border:1px solid var(--border);border-radius:3px;color:var(--muted)}
+.proj-card-link{font-family:var(--mono);font-size:11px;color:var(--accent);margin-top:auto;padding-top:4px}
+
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1px;border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.skill-item{background:var(--surface);padding:14px 16px;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.skill-name{font-size:15px;font-weight:500;margin-bottom:3px}
+.skill-note{font-family:var(--mono);font-size:11px;color:var(--faint)}
+
+.edu-list{display:flex;flex-direction:column}
+.edu-item{display:grid;grid-template-columns:120px 1fr;gap:0 24px;padding:16px 0;border-bottom:1px solid var(--border)}
+.edu-item:last-child{border-bottom:none}
+.edu-year{font-family:var(--mono);font-size:12px;color:var(--faint);padding-top:2px}
+.edu-degree{font-size:17px;font-weight:500;margin-bottom:3px}
+.edu-inst{font-size:15px;color:var(--muted);margin-bottom:4px}
+.edu-grade{font-family:var(--mono);font-size:12px;color:var(--accent)}
+
+.roadmap{display:flex;flex-direction:column}
+.road-item{display:grid;grid-template-columns:120px 1fr;gap:0 24px;padding:14px 0;border-bottom:1px solid var(--border)}
+.road-item:last-child{border-bottom:none}
+.road-year{font-family:var(--mono);font-size:12px;color:var(--faint);padding-top:2px}
+.road-text{font-size:15px;color:var(--muted)}
+.road-text strong{color:var(--text);font-weight:500}
+.road-current .road-year{color:var(--accent)}
+.road-current .road-text{color:var(--text)}
+
+.footer{
+  border-top:1px solid var(--border);
+  padding-top:24px;
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--faint);
+}
+.footer-links{display:flex;gap:20px}
+.footer-links a{color:var(--muted)}
+.footer-links a:hover{color:var(--accent)}
+
+@media(max-width:680px){
+  .hero{grid-template-columns:1fr}
+  .hero-right{display:none}
+  .proj-card{flex:0 0 100%}
+  .edu-item,.road-item{grid-template-columns:80px 1fr}
+}
+@media(min-width:681px) and (max-width:860px){
+  .proj-card{flex:0 0 calc(50% - 7px)}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="topbar-name">Pranav Vasisth</div>
+    <div class="topbar-links">
+      <a href="https://github.com/ipranavvasisth/" target="_blank">github</a>
+      <a href="https://linkedin.com/in/pranav-vasisth" target="_blank">linkedin</a>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-number">B.E. Mechanical Engineering · BIT Bangalore · 2025–2029</div>
+      <h1>Mechanical engineer<br>building toward <em>aerospace<br>and propulsion</em></h1>
+      <p class="hero-desc">Self-directing toward compressible flow and propulsion systems through Python-based engineering simulations. Each project is built from first principles with full theory documentation.</p>
+    </div>
+    <div class="hero-right">
+      <div class="stat">
+        <div class="stat-label">CGPA · Sem 1</div>
+        <div class="stat-value">8.95 / 10</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Projects</div>
+        <div class="stat-value">4 complete</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Focus area</div>
+        <div class="stat-value">Propulsion</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-num">01</div>
+      <div class="section-title">About</div>
+    </div>
+    <div class="about-body">
+      <p>Mechanical Engineering student at Bangalore Institute of Technology, building a self-directed foundation in aerospace and propulsion engineering. Working through thermodynamics, compressible flow, and radiation physics by implementing Python simulations from physical first principles not tutorials.</p>
+      <p>Each project ships with a Jupyter notebook, a THEORY.md file explaining the governing equations, and a compiled LaTeX PDF. The work is cumulative: later projects build directly on the physics and code from earlier ones.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-num">02</div>
+      <div class="section-title">Projects</div>
+    </div>
+    <div class="carousel-controls">
+      <div class="carousel-counter" id="counter">1 – 3 of 4</div>
+      <div class="carousel-btns">
+        <button class="cbtn" id="prev" disabled>&#8592;</button>
+        <button class="cbtn" id="next">&#8594;</button>
+      </div>
+    </div>
+    <div class="carousel-viewport">
+      <div class="carousel-track" id="track">
+
+        <div class="proj-card">
+          <div class="proj-card-num">01</div>
+          <div class="proj-card-title">Brayton Cycle Simulator</div>
+          <p class="proj-card-desc">Simulates the thermodynamic cycle governing every jet engine and gas turbine. Computes state conditions at all four stages, plots the T-S diagram, and maps thermal efficiency against compression ratio.</p>
+          <div class="proj-card-result">η = 48.21 %<br>BWR = 41.37 %<br>W_net = 397.6 kJ/kg</div>
+          <div class="proj-card-tools">
+            <span class="tool">NumPy</span>
+            <span class="tool">Matplotlib</span>
+            <span class="tool">Jupyter</span>
+          </div>
+          <a class="proj-card-link" href="https://github.com/ipranavvasisth/aero-simulations/tree/main/01-brayton-cycle" target="_blank">View on GitHub →</a>
+        </div>
+
+        <div class="proj-card">
+          <div class="proj-card-num">02</div>
+          <div class="proj-card-title">Rocket Nozzle Flow Calculator</div>
+          <p class="proj-card-desc">Computes C-D nozzle exit conditions from chamber state using isentropic relations. Calculates thrust, specific impulse, and plots Mach number, pressure, and temperature distributions along the nozzle.</p>
+          <div class="proj-card-result">Me = 2.94<br>F = 36.2 kN<br>Isp = 218.5 s</div>
+          <div class="proj-card-tools">
+            <span class="tool">NumPy</span>
+            <span class="tool">SciPy</span>
+            <span class="tool">Matplotlib</span>
+          </div>
+          <a class="proj-card-link" href="https://github.com/ipranavvasisth/aero-simulations/tree/main/02-rocket-nozzle" target="_blank">View on GitHub →</a>
+        </div>
+
+        <div class="proj-card">
+          <div class="proj-card-num">03</div>
+          <div class="proj-card-title">Blackbody Radiation Simulator</div>
+          <p class="proj-card-desc">Implements Planck's Law, Wien's Displacement Law, and the Stefan-Boltzmann Law. Visualises emission spectra from 3000 K to 12000 K with annotated peak wavelengths and the visible light band.</p>
+          <div class="proj-card-result">3000 K → 966 nm IR<br>5000 K → 580 nm VIS<br>256× power at 4× T</div>
+          <div class="proj-card-tools">
+            <span class="tool">NumPy</span>
+            <span class="tool">Matplotlib</span>
+            <span class="tool">Jupyter</span>
+          </div>
+          <a class="proj-card-link" href="https://github.com/ipranavvasisth/aero-simulations/tree/main/03-black-body-radiation" target="_blank">View on GitHub →</a>
+        </div>
+
+        <div class="proj-card">
+          <div class="proj-card-num">04</div>
+          <div class="proj-card-title">Isentropic Flow Relations Calculator</div>
+          <p class="proj-card-desc">Calculates temperature, pressure, density, and area ratios across M = 0 to 5. Produces a computational lookup table equivalent to standard isentropic flow tables used in aerospace engineering practice.</p>
+          <div class="proj-card-result">A/A* = 1 at M = 1<br>P/P₀ = 0.0019 at M = 5<br>M range: 0 → 5</div>
+          <div class="proj-card-tools">
+            <span class="tool">NumPy</span>
+            <span class="tool">Matplotlib</span>
+            <span class="tool">Jupyter</span>
+          </div>
+          <a class="proj-card-link" href="https://github.com/ipranavvasisth/aero-simulations/tree/main/04-isentropic-flow" target="_blank">View on GitHub →</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-num">03</div>
+      <div class="section-title">Skills</div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-item"><div class="skill-name">Python</div><div class="skill-note">primary language</div></div>
+      <div class="skill-item"><div class="skill-name">NumPy</div><div class="skill-note">scientific arrays</div></div>
+      <div class="skill-item"><div class="skill-name">Matplotlib</div><div class="skill-note">engineering plots</div></div>
+      <div class="skill-item"><div class="skill-name">SciPy</div><div class="skill-note">ODE · optimisation</div></div>
+      <div class="skill-item"><div class="skill-name">Jupyter</div><div class="skill-note">notebooks</div></div>
+      <div class="skill-item"><div class="skill-name">LaTeX</div><div class="skill-note">Overleaf · theory docs</div></div>
+      <div class="skill-item"><div class="skill-name">Git / GitHub</div><div class="skill-note">version control</div></div>
+      <div class="skill-item"><div class="skill-name">CAD</div><div class="skill-note">basic · in progress</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-num">04</div>
+      <div class="section-title">Education</div>
+    </div>
+    <div class="edu-list">
+      <div class="edu-item">
+        <div class="edu-year">2025 – 2029</div>
+        <div class="edu-body">
+          <div class="edu-degree">B.E. Mechanical Engineering</div>
+          <div class="edu-inst">Bangalore Institute of Technology · Semester 2</div>
+          <div class="edu-grade">CGPA 8.95 · Sem 1</div>
+        </div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-year">2023 – 2025</div>
+        <div class="edu-body">
+          <div class="edu-degree">Pre-University Course (PUC)</div>
+          <div class="edu-inst">Deeksha TR Nagar · PCM</div>
+          <div class="edu-grade">92 %</div>
+        </div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-year">2011 – 2023</div>
+        <div class="edu-body">
+          <div class="edu-degree">High School</div>
+          <div class="edu-inst">The Sudarshan Vidya Mandir ICSE Academy · Science</div>
+          <div class="edu-grade">95 %</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div>Pranav Vasisth · 2026</div>
+    <div class="footer-links">
+      <a href="https://github.com/ipranavvasisth/aero-simulations" target="_blank">GitHub</a>
+      <a href="https://linkedin.com/in/pranav-vasisth" target="_blank">LinkedIn</a>
+    </div>
+  </div>
+
+</div>
+<script>
+(function(){
+  var track = document.getElementById('track');
+  var prev  = document.getElementById('prev');
+  var next  = document.getElementById('next');
+  var ctr   = document.getElementById('counter');
+  var cards = Array.from(track.querySelectorAll('.proj-card'));
+  var total = cards.length;
+  var pos   = 0;
+
+  function perPage(){
+    if(window.innerWidth <= 680) return 1;
+    if(window.innerWidth <= 860) return 2;
+    return 3;
+  }
+
+  function go(n){
+    pos = Math.max(0, Math.min(n, total - perPage()));
+    var w = cards[0].getBoundingClientRect().width;
+    var g = 14;
+    track.style.transform = 'translateX(-'+(pos*(w+g))+'px)';
+    var pp = perPage();
+    ctr.textContent = (pos+1)+' \u2013 '+Math.min(pos+pp,total)+' of '+total;
+    prev.disabled = pos === 0;
+    next.disabled = pos + pp >= total;
+  }
+
+  prev.onclick = function(){ go(pos-1); };
+  next.onclick = function(){ go(pos+1); };
+  window.addEventListener('resize', function(){ go(Math.min(pos, total-perPage())); });
+  go(0);
+})();
+</script>
+</body>
+</html>
